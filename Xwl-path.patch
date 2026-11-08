@@ -1,0 +1,13 @@
+diff --git a/waywall/server/xserver.c b/waywall/server/xserver.c
+index 6f67bc5..079129b 100644
+--- a/waywall/server/xserver.c
++++ b/waywall/server/xserver.c
+@@ -347,7 +347,7 @@ xserver_exec(struct xserver *srv, int notify_fd, int log_fd) {
+     // Determine the Xwayland binary to use.
+     char *xwl_path = getenv("WAYWALL_XWAYLAND_BINARY");
+     if (!xwl_path) {
+-        xwl_path = "Xwayland";
++        xwl_path = "/app/extensions/Waywall/bin/Xwayland";
+     }
+ 
+     // Build the command to pass to execvp.
