@@ -1,0 +1,35 @@
+id: org.prismlauncher.PrismLauncher.Extension.GlfwWaylandPatch
+branch: stable
+
+runtime: org.prismlauncher.PrismLauncher
+runtime-version: stable
+sdk: org.freedesktop.Sdk//25.08
+sdk-extensions: []
+
+build-extension: true
+separate-locales: false
+
+build-options:
+  prefix: /app/extensions/GlfwWaylandPatch
+
+modules:
+  - name: glfw
+    buildsystem: cmake-ninja
+    builddir: true
+    no-make-install: true
+    config-opts:
+      - -DBUILD_SHARED_LIBS=ON
+      - -DGLFW_BUILD_WAYLAND=ON
+    build-commands:
+      - install -Dm755 src/libglfw.so.3.4 $FLATPAK_DEST/lib/libglfw.so
+    sources:
+      - type: git
+        url: https://github.com/glfw/glfw.git
+        tag: "3.4"
+      - type: file
+        url: https://raw.githubusercontent.com/tesselslate/waywall/be3e018bb5f7c25610da73cc320233a26dfce948/contrib/glfw.patch
+        sha256: 925dc315855f51ee023c14ae8770c9c43a58be0f2f171abc17e451f6c1be1071
+        dest-filename: glfw.patch
+      - type: shell
+        commands:
+          - patch -p1 < glfw.patch
